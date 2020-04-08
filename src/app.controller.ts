@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CancelBookingFlightDto } from './dto/cancel-booking.dto';
+import moment = require('moment');
 
 @Controller()
 export class AppController {
@@ -65,7 +66,7 @@ export class AppController {
     if(isAvailable === 'available'){
       status = 'booking success'
       let query = await this.flightRepository.update({ flightNumber: params.flightNumber, seat: params.seat, status: 'available' }, 
-        {status: "booked", bookingUser: params.userName, bookedDate: Date.now()});
+        {status: "booked", bookingUser: params.userName, bookedDate: moment().format()});
     }
     else{
       status = 'booking failed'
